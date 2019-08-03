@@ -18,12 +18,12 @@ export default class GeckoDriverLauncher {
         this.geckoDriverArgs = config.geckoDriverArgs || []
         this.geckoDriverLogs = config.geckoDriverLogs
 
-        if (!this.geckoDriverArgs.find(arg => arg.startsWith('--port'))) {
-            this.geckoDriverArgs.push(`--port ${config.port}`)
+        if (!this.geckoDriverArgs.find(arg => arg.startsWith('--port')) && config.port) {
+            this.geckoDriverArgs.push(`--port=${config.port}`)
         }
 
-        if (!this.geckoDriverArgs.find(arg => arg.startsWith('--log'))) {
-            this.geckoDriverArgs.push(`--log ${config.log}`)
+        if (!this.geckoDriverArgs.find(arg => arg.startsWith('--log')) && config.logLevel) {
+            this.geckoDriverArgs.push(`--log=${config.logLevel}`)
         }
         
         this.process = GeckoDriver.start(this.geckoDriverArgs)

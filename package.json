@@ -1,0 +1,41 @@
+{
+  "name": "wdio-geckodriver-service",
+  "version": "1.0.0",
+  "description": "WebdriverIO service to start & stop GeckoDriver",
+  "main": "index.js",
+  "scripts": {
+    "build": "NODE_ENV=production run-s clean compile",
+    "clean": "rimraf ./build",
+    "compile": "babel src/ -d build/ --config-file ./babel.config.js",
+    "test": "run-s test:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RafalSkorka/wdio-geckodriver-service.git"
+  },
+  "keywords": [
+    "wdio",
+    "geckodriver"
+  ],
+  "author": "Rafal Skorka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RafalSkorka/wdio-geckodriver-service/issues"
+  },
+  "homepage": "https://github.com/RafalSkorka/wdio-geckodriver-service#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/plugin-proposal-optional-catch-binding": "^7.2.0",
+    "@babel/preset-env": "^7.5.5",
+    "babel-plugin-source-map-support": "^2.1.1",
+    "geckodriver": "^1.16.2",
+    "rimraf": "^2.6.3"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0"
+  }
+}

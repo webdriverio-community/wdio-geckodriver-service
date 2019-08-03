@@ -2,7 +2,7 @@
   "name": "wdio-geckodriver-service",
   "version": "1.0.0",
   "description": "WebdriverIO service to start & stop GeckoDriver",
-  "main": "index.js",
+  "main": "./build",
   "scripts": {
     "build": "NODE_ENV=production run-s clean compile",
     "clean": "rimraf ./build",

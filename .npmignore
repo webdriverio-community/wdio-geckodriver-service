@@ -1,0 +1,6 @@
+src
+tests
+coverage
+babel.config.js
+GeckoDriver.txt
+.*

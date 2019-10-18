@@ -63,8 +63,6 @@ exports.default = class GeckoService {
             this.geckoDriverArgs.push(`--log=${config.logLevel}`)
         }
 
-        console.log(this.geckoDriverArgs);
-
         this.process = GeckoDriver.start(this.geckoDriverArgs)
 
         if (typeof this.geckoDriverLogs === 'string') {

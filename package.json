@@ -1,13 +1,11 @@
 {
   "name": "wdio-geckodriver-service",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "WebdriverIO service to start & stop GeckoDriver",
-  "main": "./build",
+  "main": "src/index.js",
   "scripts": {
-    "build": "NODE_ENV=production run-s clean compile",
-    "clean": "rimraf ./build",
-    "compile": "babel src/ -d build/ --config-file ./babel.config.js",
-    "test": "run-s test:*"
+    "test": "npm install && wdio run wdio.conf.js",
+    "prepare": "require-self"
   },
   "repository": {
     "type": "git",
@@ -24,16 +22,13 @@
   },
   "homepage": "https://github.com/RafalSkorka/wdio-geckodriver-service#readme",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-export-default-from": "^7.5.2",
-    "@babel/plugin-proposal-function-bind": "^7.2.0",
-    "@babel/plugin-proposal-optional-catch-binding": "^7.2.0",
-    "@babel/preset-env": "^7.5.5",
-    "babel-plugin-source-map-support": "^2.1.1",
-    "geckodriver": "^1.16.2",
-    "rimraf": "^2.6.3"
+    "@wdio/cli": "^5.15.1",
+    "@wdio/local-runner": "^5.15.1",
+    "@wdio/mocha-framework": "^5.15.1",
+    "@wdio/spec-reporter": "^5.15.1",
+    "@wdio/sync": "^5.15.1",
+    "geckodriver": "^1.19.0",
+    "require-self": "^0.2.1"
   },
   "dependencies": {
     "fs-extra": "^8.1.0"

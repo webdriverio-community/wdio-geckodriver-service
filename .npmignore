@@ -1,6 +1,5 @@
-src
-tests
+test
 coverage
-babel.config.js
-GeckoDriver.txt
+GeckoDriver*.txt
+wdio.conf.js
 .*

@@ -4,8 +4,8 @@
   "description": "WebdriverIO service to start & stop GeckoDriver",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm install && wdio run wdio.conf.js",
-    "prepare": "require-self"
+    "test": "wdio run wdio.conf.js",
+    "prepare-test": "require-self && npm install"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "require-self": "^0.2.1"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "get-port": "^5.0.0"
   }
 }

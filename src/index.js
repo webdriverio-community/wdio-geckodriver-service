@@ -1,6 +1,7 @@
-const path = require('path')
-const fs = require('fs-extra')
-const GeckoDriver = require('geckodriver')
+const path = require('path');
+const fs = require('fs-extra');
+const geckoDriver = require('geckodriver');
+const getPort = require('get-port');
 
 /**
  * Resolves the given path into a absolute path and appends the default filename as fallback when the provided path is a directory.
@@ -9,13 +10,13 @@ const GeckoDriver = require('geckodriver')
  * @return {String}                 absolute file path
  */
 function getFilePath(filePath, defaultFilename) {
-    const FILE_EXTENSION_REGEX = /\.[0-9a-z]+$/i
+    const FILE_EXTENSION_REGEX = /\.[0-9a-z]+$/i;
     let absolutePath = path.resolve(filePath);
 
     // test if we already have a file (e.g. selenium.txt, .log, log.txt, etc.)
     // NOTE: path.extname doesn't work to detect a file, cause dotfiles are reported by node to have no extension
     if (!FILE_EXTENSION_REGEX.test(path.basename(absolutePath))) {
-        absolutePath = path.join(absolutePath, defaultFilename)
+        absolutePath = path.join(absolutePath, defaultFilename);
     }
 
     return absolutePath;
@@ -28,9 +29,9 @@ exports.default = class GeckoService {
         return this;
     }
 
-    onPrepare(config) {
+    async onPrepare(config) {
         if (config.geckoDriverPersistent) {
-            this._startGeckoDriver(config);
+            await this._startGeckoDriver(config);
         }
     }
 
@@ -38,32 +39,32 @@ exports.default = class GeckoService {
         this._stopGeckoDriver();
     }
 
-    beforeSession(config) {
+    async beforeSession(config) {
         if (config.geckoDriverPersistent) {
             return;
         }
-        this._startGeckoDriver(config);
+        await this._startGeckoDriver(config);
     }
 
     afterSession() {
         this._stopGeckoDriver();
     }
 
-    _startGeckoDriver(config) {
+    async _startGeckoDriver(config) {
         this.geckoDriverArgs = config.geckoDriverArgs || [];
         this.geckoDriverLogs = config.geckoDriverLogs;
 
-        if (config.geckoDriverRandomPort !== false) {
-            config.port = Math.floor(Math.random() * (65535 - 1024)) + 1024;
-        }
-
-        this.geckoDriverArgs.push(`--port=${config.port}`)
-
         if (!this.geckoDriverArgs.find(arg => arg.startsWith('--log')) && config.logLevel) {
-            this.geckoDriverArgs.push(`--log=${config.logLevel}`)
+            this.geckoDriverArgs.push(`--log=${config.logLevel}`);
         }
 
-        this.process = GeckoDriver.start(this.geckoDriverArgs)
+        if (config.geckoDriverRandomPort !== false) {
+            config.port = await getPort();
+        }
+
+        this.geckoDriverArgs.push(`--port=${config.port}`);
+
+        this.process = geckoDriver.start(this.geckoDriverArgs);
 
         if (typeof this.geckoDriverLogs === 'string') {
             this._redirectLogStream(config.port);
@@ -72,7 +73,7 @@ exports.default = class GeckoService {
 
     _stopGeckoDriver() {
         if (this.process) {
-            GeckoDriver.stop();
+            geckoDriver.stop();
         }
     }
 
@@ -89,5 +90,5 @@ exports.default = class GeckoService {
     }
 
 }
-exports.launcher = exports.default
 
+exports.launcher = exports.default

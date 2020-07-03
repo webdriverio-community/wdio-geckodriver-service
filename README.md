@@ -1,19 +1,17 @@
 WDIO GeckoDriver Service
 ================================
 
-(Based on [wdio-chromedriver-service](https://www.npmjs.com/package/wdio-chromedriver-service).)
-
-Note - this service is targeted at WDIO v5.
+Note - this service is targeted at WDIO v6.
 
 ----
 
 This service helps you to run GeckoDriver seamlessly when running tests with the
-[WDIO testrunner](http://webdriver.io/guide/testrunner/gettingstarted.html).
-It uses the [geckodriver](https://www.npmjs.com/package/geckodriver) NPM package that wraps the GeckoDriver for you.
+[WDIO testrunner](https://webdriver.io/docs/gettingstarted.html).
 
-Note - this service does not require a Selenium server, but uses GeckoDriver to communicate with the browser directly.
-Obviously, it only supports:
+This service does not require a Selenium server, but uses the
+[geckodriver](https://www.npmjs.com/package/geckodriver) NPM package that wraps the GeckoDriver for you.
 
+Example capabilities:
 ```js
 capabilities: [{
         browserName: 'firefox'
@@ -22,30 +20,17 @@ capabilities: [{
 
 ## Installation
 
-The easiest way is to keep `wdio-geckodriver-service` as a devDependency in your `package.json`.
-
-```json
-{
-  "devDependencies": {
-    "wdio-geckodriver-service": "^1.0.0"
-  }
-}
-```
-
-You can simple do it by:
 
 ```bash
 npm install wdio-geckodriver-service --save-dev
 ```
 
-Note! You have to install [geckodriver](https://www.npmjs.com/package/geckodriver) separately, as it's a peerDependency
+You have to install [geckodriver](https://www.npmjs.com/package/geckodriver) separately, as it's a peerDependency
 of this project, and you're free to choose what version to use. Install it using:
 
 ```bash
 npm install geckodriver --save-dev
 ```
-
-Instructions on how to install `WebdriverIO` can be found [here.](http://webdriver.io/guide/getstarted/install.html)
 
 ## Configuration
 
@@ -55,10 +40,6 @@ add `geckodriver` to your service array:
 ```js
 // wdio.conf.js
 export.config = {
-    // MANDATORY: Override path for geckodriver service.
-    // Default: /wd/hub
-    path: '/',
-
     // MANDATORY: Add geckodriver to service array.
     // Default: empty array
     services: ['geckodriver'],
@@ -81,7 +62,7 @@ export.config = {
     // Logs are saved as `GeckoDriver-{portname}.txt`
     // Logs are not stored if this option is not set.
     // Default: not set
-    geckoDriverLogs: './',
+    geckoDriverLogs: './logs',
 
     // OPTIONAL: Launch geckodriver once for all specs if true.
     // Launch geckodriver for each spec separately if false.
@@ -93,12 +74,10 @@ export.config = {
     // Must be set to true if maxInstances > 1.
     // Set it to false to use the `port` config option.
     // Default: true
-    geckoDriverRandomPort: false,
-
-  // ...
+    geckoDriverRandomPort: true,
 };
 ```
 
 ----
 
-For more information on WebdriverIO see the [homepage](http://webdriver.io).
+For more information on WebdriverIO see the [homepage](https://webdriver.io).

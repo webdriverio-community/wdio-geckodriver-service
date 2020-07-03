@@ -1,5 +1,5 @@
+logs
 test
 coverage
-GeckoDriver*.txt
 wdio.conf.js
 .*

@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const geckoDriver = require('geckodriver');
 const getPort = require('get-port');
+const tcpPortUsed = require('tcp-port-used');
 
 /**
  * Resolves the given path into a absolute path and appends the default filename as fallback when the provided path is a directory.
@@ -67,14 +68,23 @@ exports.default = class GeckoService {
         if (typeof geckoDriverLogs === 'string') {
             const DEFAULT_LOG_FILENAME = `GeckoDriver-${config.port}.log`;
             const logFile = getFilePath(geckoDriverLogs, DEFAULT_LOG_FILENAME);
+            const DEFAULT_ERR_LOG_FILENAME = `GeckoDriver-${config.port}.stderr.log`;
+            const errFile = getFilePath(geckoDriverLogs, DEFAULT_ERR_LOG_FILENAME);
             fs.ensureFileSync(logFile);
             options.maxBuffer = 10 * 1024 * 1024;
             callback = function (error, stdout, stderr) {
                 fs.writeFileSync(logFile, stdout);
+                fs.writeFileSync(errFile, stderr);
             };
         }
 
         this.process = require('child_process').execFile(geckoDriver.path, geckoDriverArgs, options, callback);
+        const pollInterval = 100;
+        const timeout = 10000;
+        return tcpPortUsed.waitUntilUsed(config.port, pollInterval, timeout)
+            .then( () => {
+                return this.process ;
+            });
     }
 
     _stopDriver() {

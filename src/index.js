@@ -82,7 +82,7 @@ exports.default = class GeckoService {
         const pollInterval = 100;
         const timeout = 10000;
         return tcpPortUsed.waitUntilUsed(config.port, pollInterval, timeout)
-            .then(function () {
+            .then( () => {
                 return this.process ;
             });
     }

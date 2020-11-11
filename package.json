@@ -1,6 +1,6 @@
 {
   "name": "wdio-geckodriver-service",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "WebdriverIO service to start & stop GeckoDriver",
   "main": "src/index.js",
   "scripts": {
@@ -30,7 +30,8 @@
     "@wdio/mocha-framework": "^6.1.19",
     "@wdio/sync": "^6.1.14",
     "geckodriver": "^1.19.1",
-    "require-self": "^0.2.3"
+    "require-self": "^0.2.3",
+    "tcp-port-used": "^1.0.1"
   },
   "dependencies": {
     "fs-extra": "^9.0.1",

@@ -4,6 +4,11 @@
   "description": "WebdriverIO service to start & stop GeckoDriver",
   "main": "src/index.js",
   "scripts": {
+    "release": "release-it --github.release",
+    "release:ci": "npm run release -- --ci --npm.skipChecks --no-git.requireCleanWorkingDir",
+    "release:patch": "npm run release -- patch",
+    "release:minor": "npm run release -- minor",
+    "release:major": "npm run release -- major",
     "test": "wdio run ./test/wdio.conf.js"
   },
   "repository": {
@@ -27,7 +32,9 @@
     "@wdio/cli": "^7.6.0",
     "@wdio/local-runner": "^7.6.0",
     "@wdio/mocha-framework": "^7.6.0",
-    "@wdio/sync": "^7.6.0"
+    "@wdio/sync": "^7.6.0",
+    "geckodriver": "^2.0.0",
+    "release-it": "^14.6.2"
   },
   "peerDependencies": {
     "geckodriver": "^2.0.0"

@@ -14,16 +14,7 @@ exports.config = {
     }],
     logLevel: 'trace',
     outputDir: __dirname + '/logs',
-    services: [
-        [
-            GeckodriverService,
-            {
-                args: ['--log=debug'],
-                logs: './logs',
-                persistent: true
-            }
-        ]
-    ],
+    services: [[GeckodriverService]],
     framework: 'mocha',
     mochaOpts: {
         ui: 'bdd',

@@ -1,8 +1,25 @@
+const { spawn } = require('child_process')
+
 const path = require('path');
 const fs = require('fs-extra');
 const geckoDriver = require('geckodriver');
 const getPort = require('get-port');
 const tcpPortUsed = require('tcp-port-used');
+const logger = require('@wdio/logger').default
+
+const log = logger('geckodriver')
+
+const DEFAULT_LOG_FILENAME = 'wdio-geckodriver.log'
+const POLL_INTERVAL = 100
+const POLL_TIMEOUT = 10000
+const DEFAULT_CONNECTION = {
+    protocol: 'http',
+    hostname: 'localhost',
+    port: 9515,
+    path: '/'
+}
+
+const isFirefox = cap => cap.browserName.toLowerCase().includes('firefox')
 
 /**
  * Resolves the given path into a absolute path and appends the default filename as fallback when the provided path is a directory.
@@ -20,77 +37,108 @@ function getFilePath(filePath, defaultFilename) {
 }
 
 exports.default = class GeckoService {
-    async onPrepare(config, capabilities) {
-        if (config.geckoDriverPersistent) {
-            await this._startDriver(config);
-            capabilities.forEach(c => {
-                if (c.browserName.match(/firefox/i)) {
-                    c.port = config.port;
-                }
-            });
-        };
+    constructor (options, capabilities, config) {
+        this.config = config
+        this.capabilities = capabilities
+        this.options = {
+            protocol: options.protocol || DEFAULT_CONNECTION.protocol,
+            hostname: options.hostname || DEFAULT_CONNECTION.hostname,
+            port: options.port || DEFAULT_CONNECTION.port,
+            path: options.path || DEFAULT_CONNECTION.path,
+        }
+
+        this.isMultiremote = !Boolean(capabilities.browserName)
+        this.outputDir = options.logs || config.outputDir
+        this.logFileName = options.logFileName || DEFAULT_LOG_FILENAME
+        this.args = options.args || config.geckoDriverArgs || []
+        this.logs = options.logs || config.geckoDriverLogs
+        this.randomPort = options.useRandomPort || config.geckoDriverRandomPort || true
     }
 
-    onComplete(exitCode, config) {
-        if (config.geckoDriverPersistent) {
-            this._stopDriver();
+    _getPort () {
+        if (this.randomPort) {
+            return getPort();
         }
+
+        return this.port
     }
 
-    async beforeSession(config) {
-        if (!config.geckoDriverPersistent) {
-            await this._startDriver(config);
-        }
+    beforeSession(config, capabilities) {
+        return this._startDriver()
     }
 
     afterSession(config) {
-        if (!config.geckoDriverPersistent) {
-            this._stopDriver();
+        return this._stopDriver()
+    }
+
+    _redirectLogStream() {
+        const logFile = getFilePath(this.logs || this.outputDir, this.logFileName)
+
+        // ensure file & directory exists
+        fs.ensureFileSync(logFile)
+
+        const logStream = fs.createWriteStream(logFile, { flags: 'w' })
+        this.process.stdout.pipe(logStream)
+        this.process.stderr.pipe(logStream)
+    }
+
+    _mapCapabilities() {
+        if (this.isMultiremote) {
+            for (const cap of Object.values(this.capabilities)) {
+                if (isFirefox(cap.capabilities || cap)) {
+                    Object.assign(cap, this.options)
+                }
+            }
+        } else {
+            if (isFirefox(this.capabilities)) {
+                Object.assign(this.capabilities, this.options)
+            }
         }
     }
 
-    async _startDriver(config) {
-        let geckoDriverArgs = config.geckoDriverArgs || [];
-        let geckoDriverLogs = config.geckoDriverLogs;
-
-        if (!geckoDriverArgs.find(arg => arg.startsWith('--log')) && config.logLevel) {
-            geckoDriverArgs.push(`--log=${config.logLevel}`);
+    async _startDriver() {
+        if (!this.args.find(arg => arg.startsWith('--log')) && this.config.logLevel) {
+            this.args.push(`--log=${this.config.logLevel}`);
         }
 
-        if (config.geckoDriverRandomPort !== false) {
-            config.port = await getPort();
+        if (this.randomPort) {
+            this.options.port = await this._getPort()
         }
 
-        geckoDriverArgs.push(`--port=${config.port}`);
+        this.args.push(`--port=${this.options.port}`);
 
-        let options = {};
-        let callback;
-        if (typeof geckoDriverLogs === 'string') {
-            const DEFAULT_LOG_FILENAME = `GeckoDriver-${config.port}.log`;
-            const logFile = getFilePath(geckoDriverLogs, DEFAULT_LOG_FILENAME);
-            const DEFAULT_ERR_LOG_FILENAME = `GeckoDriver-${config.port}.stderr.log`;
-            const errFile = getFilePath(geckoDriverLogs, DEFAULT_ERR_LOG_FILENAME);
-            fs.ensureFileSync(logFile);
-            options.maxBuffer = 10 * 1024 * 1024;
-            callback = function (error, stdout, stderr) {
-                fs.writeFileSync(logFile, stdout);
-                fs.writeFileSync(errFile, stderr);
-            };
+        /**
+         * update capability connection options to connect
+         * to chromedriver
+         */
+        this._mapCapabilities()
+
+        let command = geckoDriver.path
+        log.info(`Start Geckodriver (${command}) with args: ${this.args.join(' ')}`);
+        if (!fs.existsSync(command)) {
+            log.warn('Could not find Geckodriver in default path: ', command)
+            log.warn('Falling back to use global geckodriver bin')
+            command = process && process.platform === 'win32' ? 'geckodriver.exe' : 'geckodriver'
+        }
+        this.process = spawn(command, this.args);
+
+        if (typeof this.outputDir === 'string') {
+            this._redirectLogStream()
+        } else {
+            this.process.stdout.pipe(split2()).on('data', log.info)
+            this.process.stderr.pipe(split2()).on('data', log.warn)
         }
 
-        this.process = require('child_process').execFile(geckoDriver.path, geckoDriverArgs, options, callback);
-        const pollInterval = 100;
-        const timeout = 10000;
-        return tcpPortUsed.waitUntilUsed(config.port, pollInterval, timeout)
-            .then( () => {
-                return this.process ;
-            });
+        await tcpPortUsed.waitUntilUsed(this.options.port, POLL_INTERVAL, POLL_TIMEOUT)
+        process.on('exit', this.onComplete.bind(this))
+        process.on('SIGINT', this.onComplete.bind(this))
+        process.on('uncaughtException', this.onComplete.bind(this))
     }
 
     _stopDriver() {
-        if (this.process !== null) {
+        if (this.process) {
             this.process.kill();
-            this.process = null;
+            delete this.process
         }
     }
 }

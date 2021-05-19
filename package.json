@@ -4,8 +4,7 @@
   "description": "WebdriverIO service to start & stop GeckoDriver",
   "main": "src/index.js",
   "scripts": {
-    "test": "wdio run wdio.conf.js",
-    "prepare-test": "node node_modules/require-self/bin/require-self"
+    "test": "wdio run ./test/wdio.conf.js"
   },
   "repository": {
     "type": "git",
@@ -25,16 +24,19 @@
   },
   "homepage": "https://github.com/RafalSkorka/wdio-geckodriver-service#readme",
   "devDependencies": {
-    "@wdio/cli": "^6.1.24",
-    "@wdio/local-runner": "^6.1.24",
-    "@wdio/mocha-framework": "^6.1.19",
-    "@wdio/sync": "^6.1.14",
-    "geckodriver": "^1.19.1",
-    "require-self": "^0.2.3"
+    "@wdio/cli": "^7.6.0",
+    "@wdio/local-runner": "^7.6.0",
+    "@wdio/mocha-framework": "^7.6.0",
+    "@wdio/sync": "^7.6.0"
+  },
+  "peerDependencies": {
+    "geckodriver": "^2.0.0"
   },
   "dependencies": {
+    "@wdio/logger": "^7.5.3",
     "fs-extra": "^9.0.1",
     "get-port": "^5.1.1",
+    "split2": "^3.2.2",
     "tcp-port-used": "^1.0.1"
   }
 }

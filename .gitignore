@@ -65,7 +65,6 @@ typings/
 *.d.ts
 !babel.config.js
 !.eslintrc.js
-package-lock.json
 .DS_Store
 
 website/.sass-cache/

@@ -1,10 +1,11 @@
 const { spawn } = require('child_process')
 
-const path = require('path');
-const fs = require('fs-extra');
-const geckoDriver = require('geckodriver');
-const getPort = require('get-port');
-const tcpPortUsed = require('tcp-port-used');
+const path = require('path')
+const fs = require('fs-extra')
+const geckoDriver = require('geckodriver')
+const getPort = require('get-port')
+const tcpPortUsed = require('tcp-port-used')
+const split2 = require('split2')
 const logger = require('@wdio/logger').default
 
 const log = logger('geckodriver')

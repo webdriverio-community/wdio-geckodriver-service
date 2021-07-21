@@ -131,9 +131,9 @@ exports.default = class GeckoService {
         }
 
         await tcpPortUsed.waitUntilUsed(this.options.port, POLL_INTERVAL, POLL_TIMEOUT)
-        process.on('exit', this.onComplete.bind(this))
-        process.on('SIGINT', this.onComplete.bind(this))
-        process.on('uncaughtException', this.onComplete.bind(this))
+        process.on('exit', this._stopDriver.bind(this))
+        process.on('SIGINT', this._stopDriver.bind(this))
+        process.on('uncaughtException', this._stopDriver.bind(this))
     }
 
     _stopDriver() {

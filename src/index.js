@@ -49,10 +49,9 @@ exports.default = class GeckoService {
         }
 
         this.isMultiremote = !Boolean(capabilities.browserName)
-        this.outputDir = options.logs || config.outputDir
+        this.outputDir = options.logs || config.geckoDriverLogs || config.outputDir
         this.logFileName = options.logFileName || DEFAULT_LOG_FILENAME
         this.args = options.args || config.geckoDriverArgs || []
-        this.logs = options.logs || config.geckoDriverLogs
         this.randomPort = options.useRandomPort || config.geckoDriverRandomPort || true
     }
 
@@ -73,7 +72,7 @@ exports.default = class GeckoService {
     }
 
     _redirectLogStream() {
-        const logFile = getFilePath(this.logs || this.outputDir, this.logFileName)
+        const logFile = getFilePath(this.outputDir, this.logFileName)
 
         // ensure file & directory exists
         fs.ensureFileSync(logFile)

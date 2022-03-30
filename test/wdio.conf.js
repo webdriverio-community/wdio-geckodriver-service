@@ -8,8 +8,8 @@ exports.config = {
     capabilities: [{
         maxInstances: 5,
         browserName: 'firefox',
-        "moz:firefoxOptions": {
-            "args": ["-headless"],
+        'moz:firefoxOptions': {
+            'args': ['-headless'],
         }
     }],
     logLevel: 'trace',

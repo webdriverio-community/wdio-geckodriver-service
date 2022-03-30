@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       releaseType:
-        description: 'Release type - major, minor or patch'
+        description: "Release Type"
         required: true
-        default: 'patch'
+        type: choice
+        default: "patch"
+        options:
+          - patch
+          - minor
+          - major
       distTag:
         description: 'NPM tag (e.g. use "next" to release a test version)'
         required: true
@@ -25,7 +30,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: NPM Setup
         run: |
           npm set registry "https://registry.npmjs.org/"

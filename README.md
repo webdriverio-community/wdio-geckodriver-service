@@ -1,10 +1,10 @@
-WDIO GeckoDriver Service
-================================
+# WDIO GeckoDriver Service
 
 This service helps you to run GeckoDriver seamlessly when running tests with the
 [WDIO testrunner](https://webdriver.io/docs/gettingstarted.html). This service does not require a Selenium server, but uses the [geckodriver](https://www.npmjs.com/package/geckodriver) NPM package that wraps the GeckoDriver for you.
 
 Example capabilities:
+
 ```js
 capabilities: [{
     browserName: 'firefox'
@@ -12,7 +12,6 @@ capabilities: [{
 ```
 
 ## Installation
-
 
 ```bash
 npm install wdio-geckodriver-service --save-dev
@@ -52,6 +51,33 @@ export.config = {
     ],
 };
 ```
+
+## Options
+
+### `args`
+
+Array of arguments to pass to the Geckodriver executable. Every argument should be prefixed with `--`.
+
+Type: `string[]`
+
+### `outputDir`
+
+The path where the output of the Safaridriver server should be stored (uses the `config.outputDir` by default when not set).
+
+Type: `string`
+
+### `logFileName`
+
+The name of the log file to be written in outputDir.
+
+Type: `string`
+
+### `port`
+
+Custom port to start Geckodriver on.
+
+Type: `number`<br />
+Default: `9515`
 
 ----
 

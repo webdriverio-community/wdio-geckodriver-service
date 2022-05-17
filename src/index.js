@@ -52,7 +52,7 @@ exports.default = class GeckoService {
         this.outputDir = options.logs || config.geckoDriverLogs || config.outputDir
         this.logFileName = options.logFileName || DEFAULT_LOG_FILENAME
         this.args = options.args || config.geckoDriverArgs || []
-        this.randomPort = options.useRandomPort || config.geckoDriverRandomPort || true
+        this.randomPort = options.useRandomPort || config.geckoDriverRandomPort || false
     }
 
     _getPort () {

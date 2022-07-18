@@ -87,3 +87,4 @@ docs/_*.md
 .gradle
 wallaby.conf.js
 tags
+dist

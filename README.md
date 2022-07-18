@@ -1,7 +1,6 @@
 # WDIO GeckoDriver Service [![Tests](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/test.yml)
 
-This service helps you to run GeckoDriver seamlessly when running tests with the
-[WDIO testrunner](https://webdriver.io/docs/gettingstarted.html). This service does not require a Selenium server, but uses the [geckodriver](https://www.npmjs.com/package/geckodriver) NPM package that wraps the GeckoDriver for you.
+This service helps you to run GeckoDriver seamlessly when running tests with the [WDIO testrunner](https://webdriver.io/docs/gettingstarted.html). This service does not require a Selenium server, but uses the [geckodriver](https://www.npmjs.com/package/geckodriver) NPM package that wraps the GeckoDriver for you or uses a global installed binary.
 
 Example capabilities:
 
@@ -17,7 +16,7 @@ capabilities: [{
 npm install wdio-geckodriver-service --save-dev
 ```
 
-You have to install [geckodriver](https://www.npmjs.com/package/geckodriver) separately, as it's a peerDependency of this project, and you're free to choose what version to use. Install it using:
+You have to install [geckodriver](https://www.npmjs.com/package/geckodriver) separately if Geckodriver is not already installed in your `$PATH`. It's a peerDependency of this project, and you're free to choose what version or binary to use. Install it using:
 
 ```bash
 npm install geckodriver --save-dev
@@ -45,7 +44,7 @@ export.config = {
 
                 // The path where the output of the Geckodriver server should
                 // be stored (uses the config.outputDir by default when not set).
-                logs: './logs'
+                outputDir: './logs'
             }
         ]
     ],
@@ -54,11 +53,26 @@ export.config = {
 
 ## Options
 
+### `port`
+
+Custom port to start Geckodriver on.
+
+Type: `number`<br />
+Default: _random port_
+
+### `path`
+
+The path on which the driver should run on.
+
+Type: `number`<br />
+Default: `/`
+
 ### `args`
 
 Array of arguments to pass to the Geckodriver executable. Every argument should be prefixed with `--`.
 
-Type: `string[]`
+Type: `string[]`<br />
+Default: `[]`
 
 ### `outputDir`
 
@@ -70,14 +84,13 @@ Type: `string`
 
 The name of the log file to be written in outputDir.
 
-Type: `string`
+Type: `string`<br />
+Default: `wdio-geckodriver.log`
 
-### `port`
+### `geckodriverCustomPath`
 
-Custom port to start Geckodriver on.
-
-Type: `number`<br />
-Default: `9515`
+Type: `string`<br />
+Default: _path to local or global installed Geckodriver_
 
 ----
 

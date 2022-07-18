@@ -1,5 +1,5 @@
-logs
+src/**
 test
 coverage
-wdio.conf.js
+tsconfig.json
 .*

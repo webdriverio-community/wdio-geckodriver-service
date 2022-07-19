@@ -5,7 +5,9 @@
   "author": "Rafal Skorka",
   "license": "MIT",
   "homepage": "https://github.com/RafalSkorka/wdio-geckodriver-service#readme",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typeScriptVersion": "3.8.3",
   "keywords": [
     "wdio",
     "geckodriver",

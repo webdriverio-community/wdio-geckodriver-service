@@ -4,5 +4,5 @@ export const POLL_TIMEOUT = 10000
 export const DEFAULT_PATH = '/'
 export const LOCAL_OPTIONS = {
     protocol: 'http',
-    hostname: 'localhost'
+    hostname: '127.0.0.1'
 }

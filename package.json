@@ -4,7 +4,7 @@
   "description": "WebdriverIO service to start & stop GeckoDriver",
   "author": "Rafal Skorka",
   "license": "MIT",
-  "homepage": "https://github.com/RafalSkorka/wdio-geckodriver-service#readme",
+  "homepage": "https://github.com/webdriverio-community/wdio-geckodriver-service#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "typeScriptVersion": "3.8.3",
@@ -17,10 +17,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RafalSkorka/wdio-geckodriver-service.git"
+    "url": "git+https://github.com/webdriverio-community/wdio-geckodriver-service.git"
   },
   "bugs": {
-    "url": "https://github.com/RafalSkorka/wdio-geckodriver-service/issues"
+    "url": "https://github.com/webdriverio-community/wdio-geckodriver-service/issues"
   },
   "engines": {
     "node": ">=12.0.0"

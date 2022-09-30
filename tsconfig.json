@@ -1,18 +1,15 @@
 {
     "compilerOptions": {
+      "module": "ESNext",
       "target": "ES2020",
-      "module": "CommonJS",
       "baseUrl": "src",
       "outDir": "./dist",
       "moduleResolution": "node",
-      "esModuleInterop": true,
-      "strict": true,
+      "strictBindCallApply": true,
+      "strictPropertyInitialization": true,
+      "strictNullChecks": true,
       "declaration": true,
       "declarationMap": true,
-      "noUnusedLocals": true,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitReturns": true,
-      "inlineSources": true,
       "skipLibCheck": true,
       "sourceMap": true,
       "allowSyntheticDefaultImports": true,
@@ -20,10 +17,6 @@
       "noEmitOnError": true,
       "lib": ["ES2020"],
       "noImplicitAny": true,
-      "resolveJsonModule": true,
-      "allowJs": true,
-      "experimentalDecorators": true,
-      "checkJs": true,
       "types": [
         "node",
         "webdriverio/async",
@@ -31,6 +24,9 @@
         "expect-webdriverio"
       ]
     },
-    "include": ["src/**/*"],
+    "include": [
+      "src/**/*",
+      "src/cjs/package.json"
+    ],
     "ignore": ["node_modules", "dist"]
   }

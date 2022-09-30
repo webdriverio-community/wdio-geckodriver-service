@@ -8,11 +8,11 @@ import split2 from 'split2'
 import logger from '@wdio/logger'
 import type { Capabilities, Options } from '@wdio/types'
 
-import { isFirefox, getFilePath } from './utils'
+import { isFirefox, getFilePath } from './utils.js'
 import {
     DEFAULT_LOG_FILENAME, POLL_INTERVAL, POLL_TIMEOUT, DEFAULT_PATH,
-    LOCAL_OPTIONS
-} from './constants'
+    LOCAL_OPTIONS, pkg
+} from './constants.js'
 import type { GeckodriverServiceOptions } from './types'
 
 const log = logger('geckodriver')
@@ -33,6 +33,7 @@ export default class GeckoDriverService {
         capabilities: Capabilities.RemoteCapability,
         public config: Options.Testrunner
     ) {
+        log.info(`Initiate Geckodriver Service (v${pkg.version})`)
         this.isMultiremote = !(capabilities as Capabilities.Capabilities).browserName
         this.port = this.options.port
         this.path = this.options.path || DEFAULT_PATH
@@ -49,7 +50,7 @@ export default class GeckoDriverService {
         return this._stopDriver()
     }
 
-    _redirectLogStream () {
+    private _redirectLogStream () {
         if (!this.outputDir || !this.process || !this.process.stdout || !this.process.stderr) {
             return false
         }
@@ -67,7 +68,7 @@ export default class GeckoDriverService {
         return true
     }
 
-    _mapCapabilities (capabilities: Capabilities.RemoteCapability, port: number) {
+    private _mapCapabilities (capabilities: Capabilities.RemoteCapability, port: number) {
         const options = {
             ...LOCAL_OPTIONS,
             port,
@@ -85,7 +86,7 @@ export default class GeckoDriverService {
         }
     }
 
-    async _startDriver (capabilities: Capabilities.RemoteCapability) {
+    private async _startDriver (capabilities: Capabilities.RemoteCapability) {
         if (!this.args.find((arg) => arg.startsWith('--log')) && this.config.logLevel) {
             this.args.push(`--log=${this.config.logLevel}`)
         }
@@ -122,7 +123,7 @@ export default class GeckoDriverService {
         process.on('uncaughtException', this._stopDriver.bind(this))
     }
 
-    _stopDriver () {
+    private _stopDriver () {
         if (this.process) {
             this.process.kill()
             delete this.process

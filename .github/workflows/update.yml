@@ -3,12 +3,10 @@ name: Merge me!
 
 on:
   workflow_run:
-    branches:
-      - main
     types:
       - completed
     workflows:
-      - Tests
+      - "Test"
 
 jobs:
   merge-me:

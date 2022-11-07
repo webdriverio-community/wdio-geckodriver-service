@@ -15,23 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # TODO: remove this step when https://github.com/ridedott/merge-me-action/issues/1581 will be resolved
-      - name: workaround-graphql-authz
-        id: workaround-graphql-authz
-        continue-on-error: true
-        run: |
-          GITHUB_REPOSITORY_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}
-          BRANCH_QUERY='{ repository(name: "GITHUB_REPOSITORY_NAME", owner: "GITHUB_REPOSITORY_OWNER") { branchProtectionRules(first: 10) { edges { node { id } } } } }'
-          BRANCH_QUERY=${BRANCH_QUERY/GITHUB_REPOSITORY_NAME/${GITHUB_REPOSITORY_NAME}}
-          BRANCH_QUERY=${BRANCH_QUERY/GITHUB_REPOSITORY_OWNER/${GITHUB_REPOSITORY_OWNER}}
-          GRAPH_QUERY=$(jq -n --arg q "$(echo $BRANCH_QUERY | tr -d '\n')" '{ query: $q}')
-          curl -X POST \
-          -si \
-          -H "Accept: application/vnd.github.package-deletes-preview+json" \
-          -H "Content-Type: application/json" \
-          -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
-          --data "$GRAPH_QUERY" \
-          --url https://api.github.com/graphql
       - name: Merge me!
         if: ${{ github.event.workflow_run.conclusion == 'success' }}
         uses: ridedott/merge-me-action@v2

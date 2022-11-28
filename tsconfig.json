@@ -16,13 +16,7 @@
       "newLine": "lf",
       "noEmitOnError": true,
       "lib": ["ES2020"],
-      "noImplicitAny": true,
-      "types": [
-        "node",
-        "@wdio/globals/types",
-        "@wdio/mocha-framework",
-        "expect-webdriverio"
-      ]
+      "noImplicitAny": true
     },
     "include": [
       "src/**/*",

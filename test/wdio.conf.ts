@@ -1,9 +1,7 @@
 import path from 'node:path'
 import type { Options, Services } from '@wdio/types'
 
-// @ts-expect-error for some reason not a module
-// eslint-disable-next-line import/default
-import GeckoDriverLauncher from '../dist/cjs/index.js'
+import GeckoDriverLauncher from '../dist/index.js'
 
 export const config: Options.Testrunner = {
     automationProtocol: 'webdriver',
@@ -16,7 +14,7 @@ export const config: Options.Testrunner = {
         }
     }],
     logLevel: 'trace',
-    services: [[GeckoDriverLauncher.default as any as Services.ServiceClass, {}]],
+    services: [[GeckoDriverLauncher as unknown as Services.ServiceClass, {}]],
     framework: 'mocha',
     mochaOpts: {
         ui: 'bdd',

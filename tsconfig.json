@@ -26,8 +26,7 @@
     },
     "include": [
       "src/**/*",
-      "src/cjs/package.json",
-      "test"
+      "src/cjs/package.json"
     ],
     "ignore": ["node_modules", "dist"]
   }

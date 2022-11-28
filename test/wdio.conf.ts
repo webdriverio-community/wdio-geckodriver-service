@@ -1,11 +1,10 @@
-import path from 'node:path'
 import type { Options, Services } from '@wdio/types'
 
 import GeckoDriverLauncher from '../dist/index.js'
 
 export const config: Options.Testrunner = {
     automationProtocol: 'webdriver',
-    specs: [path.resolve(__dirname, 'specs', '**', '*.ts')],
+    specs: ['./specs/**/*.ts'],
     capabilities: [{
         maxInstances: 5,
         browserName: 'firefox',

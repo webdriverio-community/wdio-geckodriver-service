@@ -9,7 +9,7 @@ import GeckoDriverLauncher from '../dist/index.js'
  * see https://github.com/browser-actions/setup-firefox/issues/359
  */
 const FIREFOX_BINARY_PATH = await promisify(exec)('which firefox').then(
-    ({ stdout }) => stdout,
+    ({ stdout }) => stdout.trim(),
     () => undefined
 )
 

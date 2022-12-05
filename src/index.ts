@@ -76,7 +76,7 @@ export default class GeckoDriverService {
         }
 
         if (this.isMultiremote) {
-            for (const cap of Object.values(capabilities as Capabilities.MultiRemoteCapabilities)) {
+            for (const cap of Object.values(capabilities as Record<string, Options.WebdriverIO>)) {
                 if (isFirefox(cap.capabilities as Capabilities.Capabilities)) {
                     Object.assign(cap, options)
                 }

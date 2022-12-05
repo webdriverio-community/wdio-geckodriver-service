@@ -92,7 +92,7 @@
   },
   "dependencies": {
     "@wdio/logger": "^8.0.0-alpha.607",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "get-port": "^6.1.2",
     "split2": "^4.1.0",
     "tcp-port-used": "^1.0.2"

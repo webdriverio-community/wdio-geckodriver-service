@@ -54,15 +54,15 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
-    "@types/node": "^18.11.10",
+    "@types/node": "^18.11.13",
     "@types/split2": "^3.2.1",
     "@types/tcp-port-used": "^1.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
-    "@wdio/cli": "^8.0.5",
-    "@wdio/local-runner": "^8.0.5",
-    "@wdio/mocha-framework": "^8.0.2",
-    "@wdio/types": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.46.0",
+    "@typescript-eslint/parser": "^5.46.0",
+    "@wdio/cli": "^8.0.12",
+    "@wdio/local-runner": "^8.0.12",
+    "@wdio/mocha-framework": "^8.0.11",
+    "@wdio/types": "^8.0.11",
     "eslint": "^8.29.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-base-typescript": "^1.1.0",
@@ -76,8 +76,8 @@
     "npm-run-all": "^4.1.5",
     "release-it": "^15.5.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.3",
-    "webdriverio": "^8.0.5"
+    "typescript": "^4.9.4",
+    "webdriverio": "^8.0.12"
   },
   "peerDependencies": {
     "@wdio/types": "^7.25.0",

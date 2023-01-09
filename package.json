@@ -53,7 +53,7 @@
     "watch": "npm run compile -- --watch"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.13",
+    "@types/fs-extra": "^11.0.0",
     "@types/node": "^18.11.13",
     "@types/split2": "^3.2.1",
     "@types/tcp-port-used": "^1.0.1",

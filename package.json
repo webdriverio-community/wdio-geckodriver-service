@@ -1,6 +1,6 @@
 {
   "name": "wdio-geckodriver-service",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "WebdriverIO service to start & stop GeckoDriver",
   "author": "Rafal Skorka",
   "license": "MIT",

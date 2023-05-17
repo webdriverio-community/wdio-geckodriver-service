@@ -6,7 +6,6 @@ const dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const packageJSONContent = (await fs.promises.readFile(path.resolve(dirname, '..', 'package.json'))).toString()
 export const pkg = JSON.parse(packageJSONContent)
 
-export const DEFAULT_LOG_FILENAME = 'wdio-geckodriver.log'
 export const POLL_INTERVAL = 100
 export const POLL_TIMEOUT = 10000
 export const DEFAULT_PATH = '/'

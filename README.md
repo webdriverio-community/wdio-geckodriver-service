@@ -16,12 +16,6 @@ capabilities: [{
 npm install wdio-geckodriver-service --save-dev
 ```
 
-You have to install [geckodriver](https://www.npmjs.com/package/geckodriver) separately if Geckodriver is not already installed in your `$PATH`. It's a peerDependency of this project, and you're free to choose what version or binary to use. Install it using:
-
-```bash
-npm install geckodriver --save-dev
-```
-
 ## Configuration
 
 By design, only Firefox is available (when installed on the host system). In order to use the service you need to add `geckodriver` to your service array:
@@ -36,15 +30,15 @@ export.config = {
             'geckodriver',
             // service options
             {
-                // OPTIONAL: Arguments passed to geckdriver executable.
-                // Check geckodriver --help for all options. Example:
-                // ['--log=debug', '--binary=/var/ff50/firefox']
-                // Default: empty array
-                args: ['--log=info'],
-
                 // The path where the output of the Geckodriver server should
                 // be stored (uses the config.outputDir by default when not set).
-                outputDir: './logs'
+                outputDir: './logs',
+
+                // pass in custom options for Geckodriver, for more information see
+                // https://github.com/webdriverio-community/node-geckodriver#options
+                geckodriverOptions: {
+                    log: 'debug' // set log level of driver
+                }
             }
         ]
     ],
@@ -52,27 +46,6 @@ export.config = {
 ```
 
 ## Options
-
-### `port`
-
-Custom port to start Geckodriver on.
-
-Type: `number`<br />
-Default: _random port_
-
-### `path`
-
-The path on which the driver should run on.
-
-Type: `number`<br />
-Default: `/`
-
-### `args`
-
-Array of arguments to pass to the Geckodriver executable. Every argument should be prefixed with `--`.
-
-Type: `string[]`<br />
-Default: `[]`
 
 ### `outputDir`
 
@@ -82,15 +55,17 @@ Type: `string`
 
 ### `logFileName`
 
-The name of the log file to be written in outputDir.
+The name of the log file to be written in `outputDir`. Requires `outputDir` to be set in WebdriverIO config or as service option.
 
 Type: `string`<br />
-Default: `wdio-geckodriver.log`
+Default: `wdio-geckodriver-service-<cid>.log`
 
-### `geckodriverCustomPath`
+### `geckodriverOptions`
 
-Type: `string`<br />
-Default: _path to local or global installed Geckodriver_
+Options that are passed into Geckodriver. See [driver docs](https://github.com/webdriverio-community/node-geckodriver#options) for more information.
+
+Type: `GeckodriverParameters`<br />
+Default: _`{}`_
 
 ----
 

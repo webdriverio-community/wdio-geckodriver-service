@@ -1,40 +1,22 @@
+import type { Capabilities } from '@wdio/types'
+import type { GeckodriverParameters } from 'geckodriver'
+
 export interface GeckodriverServiceOptions {
     /**
-     * Custom port to start Geckodriver on. By default it tries to find
-     * a free port on the system.
-     */
-    port?: number
-    /**
-     * The path on which the driver should run on.
-     *
-     * @default /
-     */
-    path?: string
-    /**
-     * Array of arguments to pass to the Geckodriver executable.
-     * Every argument should be prefixed with `--`.
-     *
-     * @default []
-     */
-    args?: string[]
-    /**
-     * The path where the output of the Geckodriver server should
-     * be stored (uses the `config.outputDir` by default when not set).
+     * Location of EdgeDriver logs.
      */
     outputDir?: string
+
     /**
-     * The name of the log file to be written in outputDir.
-     *
-     * @default "wdio-geckodriver.log"
+     * The name of the log file to be written in `outputDir`.
+     * @param {Capabilities.Capabilities} caps  capabilities to be used for the session
+     * @param {string}                    cid   worker id
      */
-    logFileName?: string
+    logFileName?: (caps: Capabilities.Capabilities, cid: string) => string
+
     /**
-     * To use a custom Geckodriver different than the one installed
-     * through [geckodriver](https://www.npmjs.com/package/geckodriver)
-     * NPM modile, provide a path.
-     *
-     * @example `/path/to/chromedriver` (Linux / MacOS)
-     * @example `./chromedriver.exe` or `d:/driver/chromedriver.exe` (Windows)
+     * Options passed to EdgeDriver, see https://github.com/webdriverio-community/node-edgedriver#options
+     * for more informatiomn
      */
-    geckodriverCustomPath?: string
+    geckodriverOptions?: GeckodriverParameters
 }

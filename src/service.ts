@@ -40,8 +40,6 @@ export default class GeckodriverService {
     }
 
     onPrepare () {
-        console.log('YOOOO!!!!')
-
         return download(this.#options.geckodriverOptions?.geckoDriverVersion)
     }
 
@@ -105,7 +103,7 @@ export default class GeckodriverService {
                 : `wdio-geckodriver-service-${cid}.log`
 
             const logFile = getFilePath(this.#options.outputDir, logfileName)
-            await fsp.mkdir(path.dirname(logFile))
+            await fsp.mkdir(path.dirname(logFile), { recursive: true })
             const logStream = fs.createWriteStream(logFile, { flags: 'w' })
             this.#process.stdout.pipe(logStream)
             this.#process.stderr.pipe(logStream)

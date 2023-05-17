@@ -55,7 +55,8 @@
       "@typescript-eslint/no-namespace": 0,
       "@typescript-eslint/no-unsafe-call": 0,
       "@typescript-eslint/no-unsafe-return": 0,
-      "node/no-unpublished-import": 0
+      "node/no-unpublished-import": 0,
+      "@typescript-eslint/naming-convention": 0
     },
     "parserOptions": {
       "ecmaVersion": 2020,

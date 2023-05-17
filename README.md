@@ -1,4 +1,4 @@
-# WDIO GeckoDriver Service [![Tests](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/test.yml)
+# WDIO GeckoDriver Service [![Tests](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/test.yml) [![Audit](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/audit.yml/badge.svg)](https://github.com/webdriverio-community/wdio-geckodriver-service/actions/workflows/audit.yml)
 
 This service helps you to run GeckoDriver seamlessly when running tests with the [WDIO testrunner](https://webdriver.io/docs/gettingstarted.html). This service does not require a Selenium server, but uses the [geckodriver](https://www.npmjs.com/package/geckodriver) NPM package that wraps the GeckoDriver for you or uses a global installed binary.
 

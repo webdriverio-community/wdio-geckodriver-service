@@ -53,7 +53,7 @@
     "watch": "npm run compile -- --watch"
   },
   "devDependencies": {
-    "@types/node": "^20.1.7",
+    "@types/node": "^20.2.1",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
     "@wdio/cli": "^8.10.2",
@@ -91,7 +91,7 @@
   "dependencies": {
     "@wdio/logger": "^8.6.6",
     "fs-extra": "^11.1.1",
-    "geckodriver": "^3.2.0",
+    "geckodriver": "^4.0.0",
     "get-port": "^6.1.2",
     "wait-port": "^1.0.4"
   }
